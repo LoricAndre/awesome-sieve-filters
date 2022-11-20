@@ -44,4 +44,4 @@ Please respect these rules :
 - [ ] Organize the filters into categories
 - [ ] Create a pull request template
 - [ ] Create an issue for filter ideas or requests
-- [ ] Add GitHub action for publishing
+- [x] Add GitHub action for publishing
