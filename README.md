@@ -1,6 +1,15 @@
 Awesome-sieve-filters
 ===
 
+<!--toc:start-->
+- [Awesome-sieve-filters
+===
+](#awesome-sieve-filters)
+  - [Contributing](#contributing)
+  - [Guidelines](#guidelines)
+  - [Roadmap](#roadmap)
+<!--toc:end-->
+
 A repo of useful sieve filters by the community.
 This is mainly aimed at [ProtonMail](https://mail.proton.me) filters,
 but they should work with any sieve filter interpreter.
@@ -35,3 +44,4 @@ Please respect these rules :
 - [ ] Organize the filters into categories
 - [ ] Create a pull request template
 - [ ] Create an issue for filter ideas or requests
+- [ ] Add GitHub action for publishing
