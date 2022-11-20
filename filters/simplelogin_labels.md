@@ -19,4 +19,4 @@ address :all :matches "To" "*.*@*") # The "To" address condition is used to get 
 	set :lower :upperfirst "labelvar" "${1}"; # ${1} contains the part before the dot, then we capitalize the first letter
   	fileinto "${labelvar}"; # Apply the label
 }
-~~~ sieve
+~~~
