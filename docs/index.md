@@ -14,9 +14,9 @@ spamtest :value "ge" :comparator "i;ascii-numeric" "${1}")
 
 
 if allof (address :all :comparator "i;unicode-casemap" :matches "From" "*simplelogin.co",
-address :all :matches "To" "*.*@*")
+address :all :matches "To" "*.*@*") # The "To" address condition is used to get the first part (before the dot)
 {
-	set :lower :upperfirst "labelvar" "${1}";
-  	fileinto "${labelvar}";
+	set :lower :upperfirst "labelvar" "${1}"; # ${1} contains the part before the dot, then we capitalize the first letter
+  	fileinto "${labelvar}"; # Apply the label
 }
 ~~~ sieve

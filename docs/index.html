@@ -1022,10 +1022,10 @@
 
 
 <span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;unicode-casemap"</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>From<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*simplelogin.co<span class="pl-pds">"</span></span>,
-<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*.*@*<span class="pl-pds">"</span></span>)
+<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*.*@*<span class="pl-pds">"</span></span>) <span class="pl-c"><span class="pl-c">#</span> The "To" address condition is used to get the first part (before the dot)</span>
 {
-	<span class="pl-k">set</span> <span class="pl-k">:lower</span> <span class="pl-k">:upperfirst</span> <span class="pl-s"><span class="pl-pds">"</span>labelvar<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>${1}<span class="pl-pds">"</span></span>;
-  	<span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>${labelvar}<span class="pl-pds">"</span></span>;
+	<span class="pl-k">set</span> <span class="pl-k">:lower</span> <span class="pl-k">:upperfirst</span> <span class="pl-s"><span class="pl-pds">"</span>labelvar<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>${1}<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">#</span> ${1} contains the part before the dot, then we capitalize the first letter</span>
+  	<span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>${labelvar}<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">#</span> Apply the label</span>
 }
 ~~~ <span class="pl-k">sieve</span></pre></div>
 
