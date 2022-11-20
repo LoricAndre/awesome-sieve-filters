@@ -1,3 +1,4 @@
+---
 name: Compile And Publish Page
 on:
   push:
@@ -17,6 +18,7 @@ jobs:
         with:
           path: .page/index.md
           outputpath: .page/
+      - run: sed -z -i 's;<title>.*</title>;<title>Awesome Sieve Filters</title>;' .page/index.html
       - name: Publish
         uses: rdok/publish-gh-page-action@v1.2.2
         with:
