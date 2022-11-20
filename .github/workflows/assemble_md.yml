@@ -1,15 +1,20 @@
-name: assemble_markdown
+name: Compile And Publish Page
 on:
   push:
-    branches: main, test_action
+    branches:
+      - main
+      - test_action
+  pull_request:
+    branches:
+      - main
 jobs:
-  Job:
+  Compile-And-Publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: cat README.md filters/* > .page/index.md
+      - uses: actions/checkout@v3
+      - run: cat filters/* > .page/index.md
       - name: Convert Markdown to HTML
-        uses: natescherer/markdown-to-html-with-github-style-action@v1
+        uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
         with:
           path: .page/index.md
           outputpath: .page/
