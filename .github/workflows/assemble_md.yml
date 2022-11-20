@@ -1,7 +1,12 @@
 name: assemble_markdown
 on:
   push:
-    branches: main, test_action
+    branches:
+      - main
+      - test_action
+  pull_request:
+    branches:
+      - main
 jobs:
   Job:
     runs-on: ubuntu-latest
