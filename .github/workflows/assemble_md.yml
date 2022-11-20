@@ -1,4 +1,4 @@
-name: assemble_markdown
+name: Compile And Publish Page
 on:
   push:
     branches:
