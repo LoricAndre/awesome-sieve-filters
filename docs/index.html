@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Generated: Do not run this script on spam messages</title>
+<title>Awesome Sieve Filters Generated: Do not run this script on spam messages</title>
 <style>
 .markdown-body .octicon {
   display: inline-block;
@@ -1009,6 +1009,12 @@
 </head>
 <body>
 <article class="markdown-body">
+<h1><a id="user-content-awesome-sieve-filters" class="anchor" aria-hidden="true" href="#awesome-sieve-filters"><span aria-hidden="true" class="octicon octicon-link"></span></a>Awesome Sieve Filters</h1>
+<p>A repo of useful sieve filters by the community.
+This is mainly aimed at <a href="https://mail.proton.me" rel="nofollow">ProtonMail</a> filters,
+but they should work with any sieve filter interpreter.
+See <a href="https://proton.me/support/sieve-advanced-custom-filters" rel="nofollow">here</a> for the Proton sieve filter docs.</p>
+<hr>
 <h2><a id="user-content-simplelogin-labels" class="anchor" aria-hidden="true" href="#simplelogin-labels"><span aria-hidden="true" class="octicon octicon-link"></span></a>SimpleLogin Labels</h2>
 <p>This filter automatically sets label for emails sent to SimpleLogin aliases. For example, any email sent to alias <code>paypal.XXXX@slmail.me</code> will be labeled as <code>Paypal</code>.</p>
 <div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>include<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>environment<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>relational<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>comparator-i;ascii-numeric<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>spamtest<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>];
