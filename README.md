@@ -2,13 +2,13 @@ Awesome-sieve-filters
 ===
 
 <!--toc:start-->
-- [Awesome-sieve-filters
-===
-](#awesome-sieve-filters)
+- [Awesome-sieve-filters](#awesome-sieve-filters)
   - [Contributing](#contributing)
   - [Guidelines](#guidelines)
   - [Roadmap](#roadmap)
 <!--toc:end-->
+
+---
 
 A repo of useful sieve filters by the community.
 This is mainly aimed at [ProtonMail](https://mail.proton.me) filters,
