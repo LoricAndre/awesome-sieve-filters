@@ -43,5 +43,5 @@ Please respect these rules :
 - [ ] Add more filters
 - [ ] Organize the filters into categories
 - [ ] Create a pull request template
-- [ ] Create an issue for filter ideas or requests
+- [x] Create an issue for filter ideas or requests
 - [x] Add GitHub action for publishing
