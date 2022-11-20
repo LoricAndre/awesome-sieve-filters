@@ -1009,49 +1009,6 @@
 </head>
 <body>
 <article class="markdown-body">
-<h1><a id="user-content-awesome-sieve-filters" class="anchor" aria-hidden="true" href="#awesome-sieve-filters"><span aria-hidden="true" class="octicon octicon-link"></span></a>Awesome-sieve-filters</h1>
-
-<ul>
-<li>
-<a href="#awesome-sieve-filters">Awesome-sieve-filters</a>
-<ul>
-<li><a href="#contributing">Contributing</a></li>
-<li><a href="#guidelines">Guidelines</a></li>
-<li><a href="#roadmap">Roadmap</a></li>
-</ul>
-</li>
-</ul>
-
-<hr>
-<p>A repo of useful sieve filters by the community.
-This is mainly aimed at <a href="https://mail.proton.me" rel="nofollow">ProtonMail</a> filters,
-but they should work with any sieve filter interpreter.
-See <a href="https://proton.me/support/sieve-advanced-custom-filters" rel="nofollow">here</a> for the Proton sieve filter docs.</p>
-<h2><a id="user-content-contributing" class="anchor" aria-hidden="true" href="#contributing"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
-<p>To contribute your sieve filter, open a pull request. In the <code>filters</code> folder,
-add your filter as a markdown file with the following template :</p>
-<div class="highlight highlight-source-gfm"><pre><span class="pl-mh"><span class="pl-mh">###</span><span class="pl-mh"> </span>Filter name</span>
-
-Description
-
-<span class="pl-c1">~~~sieve</span><span class="pl-s1"></span>
-<span class="pl-s1">Commented (if necessary) filter</span>
-<span class="pl-s1"></span><span class="pl-c1">~~~</span></pre></div>
-<h2><a id="user-content-guidelines" class="anchor" aria-hidden="true" href="#guidelines"><span aria-hidden="true" class="octicon octicon-link"></span></a>Guidelines</h2>
-<p>Please respect these rules :</p>
-<ul>
-<li>Try to split your filters as much as possible to make importing and using them as easy as possible (avoid contributing filters with multiple uses in the same file)</li>
-<li>Try to mark clearly in your snippets where the user needs to replace with his information (for example, email addresses)</li>
-<li>Comment your filters where necessary</li>
-</ul>
-<h2><a id="user-content-roadmap" class="anchor" aria-hidden="true" href="#roadmap"><span aria-hidden="true" class="octicon octicon-link"></span></a>Roadmap</h2>
-<ul>
-<li>[ ] Add more filters</li>
-<li>[ ] Organize the filters into categories</li>
-<li>[ ] Create a pull request template</li>
-<li>[ ] Create an issue for filter ideas or requests</li>
-<li>[ ] Add GitHub action for publishing</li>
-</ul>
 <h2><a id="user-content-simplelogin-labels" class="anchor" aria-hidden="true" href="#simplelogin-labels"><span aria-hidden="true" class="octicon octicon-link"></span></a>SimpleLogin Labels</h2>
 <p>This filter automatically sets label for emails sent to SimpleLogin aliases. For example, any email sent to alias <code>paypal.XXXX@slmail.me</code> will be labeled as <code>Paypal</code>.</p>
 <div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>include<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>environment<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>relational<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>comparator-i;ascii-numeric<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>spamtest<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>];
