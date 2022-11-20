@@ -1,0 +1,19 @@
+name: assemble_markdown
+on:
+  push:
+    branches: main, test_action
+jobs:
+  Job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cat README.md filters/* > .page/index.md
+      - name: Convert Markdown to HTML
+        uses: natescherer/markdown-to-html-with-github-style-action@v1
+        with:
+          path: .page/index.md
+          outputpath: .page/
+      - name: Publish
+        uses: rdok/publish-gh-page-action@v1.2.2
+        with:
+          directory: .page
