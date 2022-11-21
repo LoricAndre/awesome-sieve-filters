@@ -12,19 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: cat .page/header.md filters/* > .page/index.md
+      - run: cat .github/workflows/header.md filters/* > index.md
       - run: wget https://raw.githubusercontent.com/ekalinin/github-markdown-toc/master/gh-md-toc && chmod a+x gh-md-toc
-      - run: ./gh-md-toc --insert .page/index.md
+      - run: ./gh-md-toc --insert index.md
       - name: Converts Markdown to HTML
         uses: jaywcjlove/markdown-to-html-cli@main
         with:
-          source: .page/index.md
-          output: .page/index.html
+          source: index.md
+          output: index.html
           github-corners: https://github.com/LoricAndre/awesome-sieve-filters
           dark-mode: false
           description: Awesome Sieve Filters
-      - run: sed -z -i 's;<head>;<head><title>Awesome Sieve Filters</title>;' .page/index.html
+      - run: sed -z -i 's;<head>;<head><title>Awesome Sieve Filters</title>;' index.html
       - name: Publish
         uses: rdok/publish-gh-page-action@v1.2.2
         with:
-          directory: .page
+          directory: .
