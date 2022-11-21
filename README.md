@@ -17,7 +17,9 @@ See [here](https://proton.me/support/sieve-advanced-custom-filters) for the Prot
 
 ## Contributing
 
-To contribute your sieve filter, open a pull request. In the `filters` folder,
+To contribute your sieve filter, open a pull request.
+This can be done by clicking `fork` at the top of this page, then modifying your fork once it is created by adding your sieves, then come back to this repository and create a pull request by comparing the main from here and yours.
+In the `filters` folder,
 add your filter as a markdown file with the following template :
 
 ```markdown
