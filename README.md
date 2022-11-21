@@ -23,7 +23,7 @@ In the `filters` folder,
 add your filter as a markdown file with the following template :
 
 ```markdown
-### Filter name
+## Filter name
 
 Description
 

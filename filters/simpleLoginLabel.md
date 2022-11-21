@@ -5,14 +5,6 @@ This filter automatically sets label for emails sent to SimpleLogin aliases. For
 ~~~sieve
 require ["include", "environment", "variables", "relational", "comparator-i;ascii-numeric", "spamtest", "fileinto"];
 
-# Generated: Do not run this script on spam messages
-if allof (environment :matches "vnd.proton.spam-threshold" "*",
-spamtest :value "ge" :comparator "i;ascii-numeric" "${1}")
-{
-    return;
-}
-
-
 if allof (address :all :comparator "i;unicode-casemap" :matches "From" "*simplelogin.co",
 address :all :matches "To" "*.*@*") # The "To" address condition is used to get the first part (before the dot)
 {
