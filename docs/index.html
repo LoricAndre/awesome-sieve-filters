@@ -1056,14 +1056,6 @@ Create an addressbook called "myself" and input all your email addresses.</p>
 <p>This filter automatically sets label for emails sent to SimpleLogin aliases. For example, any email sent to alias <code>paypal.XXXX@slmail.me</code> will be labeled as <code>Paypal</code>.</p>
 <div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>include<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>environment<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>variables<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>relational<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>comparator-i;ascii-numeric<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>spamtest<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>];
 
-<span class="pl-c"><span class="pl-c">#</span> Generated: Do not run this script on spam messages</span>
-<span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">environment</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>vnd.proton.spam-threshold<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*<span class="pl-pds">"</span></span>,
-<span class="pl-en">spamtest</span> <span class="pl-k">:value</span> <span class="pl-s"><span class="pl-pds">"</span>ge<span class="pl-pds">"</span></span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;ascii-numeric"</span> <span class="pl-s"><span class="pl-pds">"</span>${1}<span class="pl-pds">"</span></span>)
-{
-    <span class="pl-k">return</span>;
-}
-
-
 <span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;unicode-casemap"</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>From<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*simplelogin.co<span class="pl-pds">"</span></span>,
 <span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*.*@*<span class="pl-pds">"</span></span>) <span class="pl-c"><span class="pl-c">#</span> The "To" address condition is used to get the first part (before the dot)</span>
 {
