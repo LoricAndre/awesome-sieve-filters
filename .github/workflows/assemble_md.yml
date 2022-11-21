@@ -15,12 +15,14 @@ jobs:
       - run: cat .page/header.md filters/* > .page/index.md
       - run: wget https://raw.githubusercontent.com/ekalinin/github-markdown-toc/master/gh-md-toc && chmod a+x gh-md-toc
       - run: ./gh-md-toc --insert .page/index.md
-      - name: Convert Markdown to HTML
-        uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
+      - name: Converts Markdown to HTML
+        uses: jaywcjlove/markdown-to-html-cli@main
         with:
-          path: .page/index.md
-          outputpath: .page/
-      - run: sed -z -i 's;<title>.*</title>;<title>Awesome Sieve Filters</title>;' .page/index.html
+          source: .page/index.md
+          output: .page/index.html
+          github-corners: https://github.com/LoricAndre/awesome-sieve-filters
+          dark-mode: false
+      # - run: sed -z -i 's;<title>.*</title>;<title>Awesome Sieve Filters</title>;' .page/index.html
       - name: Publish
         uses: rdok/publish-gh-page-action@v1.2.2
         with:
