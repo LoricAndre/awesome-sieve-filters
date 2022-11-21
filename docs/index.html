@@ -1033,6 +1033,63 @@ See <a href="https://proton.me/support/sieve-advanced-custom-filters" rel="nofol
 	<span class="pl-k">set</span> <span class="pl-k">:lower</span> <span class="pl-k">:upperfirst</span> <span class="pl-s"><span class="pl-pds">"</span>labelvar<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>${1}<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">#</span> ${1} contains the part before the dot, then we capitalize the first letter</span>
   	<span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>${labelvar}<span class="pl-pds">"</span></span>; <span class="pl-c"><span class="pl-c">#</span> Apply the label</span>
 }</pre></div>
+<p>##TBTMailSieve Additions - from twoBrokenThumbs</p>
+<p>ProtonMail Sorting
+The following are all listed as if-elseif.
+Order of filters will matter.</p>
+<div class="highlight highlight-source-sieve"><pre><span class="pl-c"><span class="pl-c">#</span>Requirements</span>
+<span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>extlists<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>imap4flags<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>vnd.proton.expire<span class="pl-pds">"</span></span>];
+
+
+<span class="pl-c"><span class="pl-c">#</span>Spam - Let's Proton run its spam process before applying personalized sieve filters</span>
+<span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">environment</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>vnd.proton.spam-threshold<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>*<span class="pl-pds">"</span></span>,
+<span class="pl-en">spamtest</span> <span class="pl-k">:value</span> <span class="pl-s"><span class="pl-pds">"</span>ge<span class="pl-pds">"</span></span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;ascii-numeric"</span> <span class="pl-s"><span class="pl-pds">"</span>${1}<span class="pl-pds">"</span></span>)
+{
+    <span class="pl-k">return</span>;
+}
+
+
+<span class="pl-c"><span class="pl-c">#</span> Sent Email Filing (prevents your sent emails showing up in other folders)</span>
+<span class="pl-c"><span class="pl-c">#</span> Create an addressbook called "myself" and input all your email addresses</span>
+<span class="pl-k">if</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:myself<span class="pl-pds">"</span></span>
+{
+  <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>sent<span class="pl-pds">"</span></span>;
+  <span class="pl-k">return</span>;
+}
+
+
+<span class="pl-c"><span class="pl-c">#</span> Filter emails by your inbound email address</span>
+<span class="pl-k">elsif</span> <span class="pl-en">allof</span> (<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;unicode-casemap"</span> <span class="pl-k">:is</span> [<span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Cc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Bcc<span class="pl-pds">"</span></span>] <span class="pl-s"><span class="pl-pds">"</span>NAME@YOUREMAIL.COM<span class="pl-pds">"</span></span>) {
+    <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
+} 
+
+
+<span class="pl-c"><span class="pl-c">#</span> Filter Based on Specific From Email </span>
+<span class="pl-c"><span class="pl-c">#</span> This example is using Anonaddy alias forwarding, but the field in the header can be adjusted to be SimpleLogin or even the base Proton header fields</span>
+<span class="pl-c"><span class="pl-c">#</span> Placing Seen first ensures it works. If you use the expire command seen will not work unless it is first - confirmed by Proton mods.</span>
+<span class="pl-c"><span class="pl-c">#</span> expire will delete email after stated days (requires vnd.proton.expire)</span>
+<span class="pl-k">elsif</span>  <span class="pl-en">header</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>X-Anonaddy-Original-Sender<span class="pl-pds">"</span></span> [<span class="pl-s"><span class="pl-pds">"</span>SENDER@EMAIL.com<span class="pl-pds">"</span></span>]{ 
+	<span class="pl-k">addflag</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>Seen<span class="pl-pds">"</span></span>; 
+    <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
+	<span class="pl-k">expire</span> <span class="pl-s"><span class="pl-pds">"</span>day<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>;
+}
+
+
+<span class="pl-c"><span class="pl-c">#</span> If the email comes from an address listed in the a contact group</span>
+<span class="pl-c"><span class="pl-c">#</span> Create a contact group for every folder you have </span>
+<span class="pl-k">elsif</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=CONTACTGROUPNAME<span class="pl-pds">"</span></span> 
+{
+  <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
+  <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>LABEL<span class="pl-pds">"</span></span>;
+}
+
+
+<span class="pl-c"><span class="pl-c">#</span> If the email address isn't in any contact groups, move it into a folder named SCREENER</span>
+<span class="pl-k">elsif</span> <span class="pl-en">not</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=*<span class="pl-pds">"</span></span> 
+{
+  <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>Screener<span class="pl-pds">"</span></span>;
+  <span class="pl-k">stop</span>;
+}</pre></div>
 
 </article>
 </body>
