@@ -1032,11 +1032,14 @@ See <a href="https://proton.me/support/sieve-advanced-custom-filters" rel="nofol
 
 
 
+<hr>
 <h2><a id="user-content-anondaddy-specific-sender" class="anchor" aria-hidden="true" href="#anondaddy-specific-sender"><span aria-hidden="true" class="octicon octicon-link"></span></a>AnonDaddy specific sender</h2>
 <p>This example is using Anonaddy alias forwarding, but the field in the header can be adjusted to be SimpleLogin or even the base Proton header fields.
 Placing Seen first ensures it works. If you use the expire command seen will not work unless it is first - confirmed by Proton mods.
-Expire will delete email after stated days (requires vnd.proton.expire).</p>
-<div class="highlight highlight-source-sieve"><pre><span class="pl-k">if</span>  <span class="pl-en">header</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>X-Anonaddy-Original-Sender<span class="pl-pds">"</span></span> [<span class="pl-s"><span class="pl-pds">"</span>SENDER@EMAIL.com<span class="pl-pds">"</span></span>]{ 
+Expire will delete email after stated days.</p>
+<div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>imap4flags<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>vnd.proton.expire<span class="pl-pds">"</span></span>];
+
+<span class="pl-k">if</span>  <span class="pl-en">header</span> <span class="pl-k">:matches</span> <span class="pl-s"><span class="pl-pds">"</span>X-Anonaddy-Original-Sender<span class="pl-pds">"</span></span> [<span class="pl-s"><span class="pl-pds">"</span>SENDER@EMAIL.com<span class="pl-pds">"</span></span>]{ 
 	<span class="pl-k">addflag</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\\</span>Seen<span class="pl-pds">"</span></span>; 
     <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
 	<span class="pl-k">expire</span> <span class="pl-s"><span class="pl-pds">"</span>day<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>;
@@ -1051,20 +1054,26 @@ You need to create a contact group for every folder you have.</p>
 }</pre></div>
 <h2><a id="user-content-file-by-recipient" class="anchor" aria-hidden="true" href="#file-by-recipient"><span aria-hidden="true" class="octicon octicon-link"></span></a>File by recipient</h2>
 <p>File into specific folder for a chosen recipient email address.</p>
-<div class="highlight highlight-source-sieve"><pre><span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;unicode-casemap"</span> <span class="pl-k">:is</span> [<span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Cc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Bcc<span class="pl-pds">"</span></span>] <span class="pl-s"><span class="pl-pds">"</span>NAME@YOUREMAIL.COM<span class="pl-pds">"</span></span>) {
+<div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>comparator-i;ascii-numeric<span class="pl-pds">"</span></span>];
+
+<span class="pl-k">if</span> <span class="pl-en">allof</span> (<span class="pl-en">address</span> <span class="pl-k">:all</span> <span class="pl-k">:comparator</span> <span class="pl-k">"i;unicode-casemap"</span> <span class="pl-k">:is</span> [<span class="pl-s"><span class="pl-pds">"</span>To<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Cc<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Bcc<span class="pl-pds">"</span></span>] <span class="pl-s"><span class="pl-pds">"</span>NAME@YOUREMAIL.COM<span class="pl-pds">"</span></span>) {
     <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
 }</pre></div>
 <h2><a id="user-content-file-all-sent-emails" class="anchor" aria-hidden="true" href="#file-all-sent-emails"><span aria-hidden="true" class="octicon octicon-link"></span></a>File all sent emails</h2>
 <p>This prevents your sent emails showing up in other folders.
 Create an addressbook called "myself" and input all your email addresses.</p>
-<div class="highlight highlight-source-sieve"><pre><span class="pl-k">if</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:myself<span class="pl-pds">"</span></span>
+<div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>include<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>extlists<span class="pl-pds">"</span></span>];
+
+<span class="pl-k">if</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:myself<span class="pl-pds">"</span></span>
 {
   <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>sent<span class="pl-pds">"</span></span>;
   <span class="pl-k">return</span>;
 }</pre></div>
 <h2><a id="user-content-file-unkown-senders" class="anchor" aria-hidden="true" href="#file-unkown-senders"><span aria-hidden="true" class="octicon octicon-link"></span></a>File unkown senders</h2>
 <p>If the email address isn't in any contact groups, move it into a folder named SCREENER</p>
-<div class="highlight highlight-source-sieve"><pre><span class="pl-k">if</span> <span class="pl-en">not</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=*<span class="pl-pds">"</span></span> 
+<div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>extlists<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>];
+
+<span class="pl-k">if</span> <span class="pl-en">not</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=*<span class="pl-pds">"</span></span> 
 {
   <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>Screener<span class="pl-pds">"</span></span>;
   <span class="pl-k">stop</span>;
