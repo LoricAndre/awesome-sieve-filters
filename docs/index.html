@@ -1047,7 +1047,9 @@ Expire will delete email after stated days.</p>
 <h2><a id="user-content-file-by-contact-group-name" class="anchor" aria-hidden="true" href="#file-by-contact-group-name"><span aria-hidden="true" class="octicon octicon-link"></span></a>File by contact group name</h2>
 <p>If the email comes from an address listed in the a contact group.
 You need to create a contact group for every folder you have.</p>
-<div class="highlight highlight-source-sieve"><pre><span class="pl-k">if</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=CONTACTGROUPNAME<span class="pl-pds">"</span></span> 
+<div class="highlight highlight-source-sieve"><pre><span class="pl-k">require</span> [<span class="pl-s"><span class="pl-pds">"</span>extlists<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>fileinto<span class="pl-pds">"</span></span>];
+
+<span class="pl-k">if</span> <span class="pl-en">header</span> <span class="pl-k">:list</span> <span class="pl-s"><span class="pl-pds">"</span>from<span class="pl-pds">"</span></span> <span class="pl-s"><span class="pl-pds">"</span>:addrbook:personal?label=CONTACTGROUPNAME<span class="pl-pds">"</span></span> 
 {
   <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>FOLDERNAME<span class="pl-pds">"</span></span>;
   <span class="pl-k">fileinto</span> <span class="pl-s"><span class="pl-pds">"</span>LABEL<span class="pl-pds">"</span></span>;
