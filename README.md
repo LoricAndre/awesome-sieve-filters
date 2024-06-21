@@ -6,6 +6,7 @@ Awesome-sieve-filters
   - [Contributing](#contributing)
   - [Guidelines](#guidelines)
   - [Roadmap](#roadmap)
+  - [Thanks](#thanks)
 <!--toc:end-->
 
 ---
@@ -47,3 +48,6 @@ Please respect these rules :
 - [ ] Create a pull request template
 - [x] Create an issue for filter ideas or requests
 - [x] Add GitHub action for publishing
+
+## Thanks
+- [SoMuchToGrok](https://github.com/SoMuchToGrok/email-sieves) for some very useful filters
